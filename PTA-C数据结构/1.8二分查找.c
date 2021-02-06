@@ -12,7 +12,7 @@ struct LNode {
     Position Last; /* 保存线性表中最后一个元素的位置 */
 };
 
-List ReadInput(); /* 裁判实现，细节不表。元素从下标1开始存储 */
+List ReadInput(); /* 元素从下标1开始存储 */
 Position BinarySearch( List L, ElementType X );
 
 int main()
@@ -30,6 +30,24 @@ int main()
 }
 
 List ReadInput(){
-	
-	
+	List L;
+	ElementType i;
+	scanf("%d",&L->Last);
+	for(i=1;i<=L->Last;i++){
+		scanf("%d",&L->Data[i]);
+	}
+	return L;
 }
+
+Position BinarySearch(List L, ElementType X){
+	int left=1, right = L->Last;
+	int mid;
+	while(left<=right){
+		mid = (left+right)/2;
+		if(L->Data[mid] < X) left = mid +1;
+		else if(L->Data[mid]==X) return mid;
+		else right=mid-1;
+	}
+	return NotFound;
+}
+
