@@ -1,32 +1,59 @@
-#include <stdio.h>
+#include<stdio.h>
 
-void Permutation(int *arr, int n, int turn);
+#define MAXN 9
+
+void RightShift(int L[], int Left, int i);
+void LeftShift(int L[], int Left, int i);
+void Permutation(int L[], int Left, int Right);
 
 int main()
 {
-	int n;
-	scanf("%d",&n);
-	int arr[n];
-	Permutation(arr, n, 0);
+	int N, L[MAXN], i;
+	scanf("%d",&N);
+	for(i=0;i<N;i++) L[i]=i+1;
+	Permutation(L, 0, N-1);
 	return 0;
 }
 
-void Permutation(int *arr, int n, int turn)
+void Permutation(int L[], int Left, int Right)
 {
-	int i, j;
-	if(turn==n)
+	int i;
+	if(Left==Right)
 	{
-		for(i=0;i<n;i++) printf("%d",arr[i]);
+		for(i=0;i<=Right;i++) printf("%d",L[i]);
 		printf("\n");
-		return;
 	}
-	for(i=1;i<=n;i++)
+	else
 	{
-		for(j=0;j<turn;j++) if(arr[j]==i) break;
-		if(j==turn)
+		for(i=Left;i<=Right;i++)
 		{
-			arr[turn] = i;
-			Permutation(arr, n, turn+1);
+			RightShift(L, Left, i);
+			Permutation(L, Left+1, Right);
+			LeftShift(L, Left, i);
 		}
-	}
+	}	
 }
+
+void RightShift(int L[], int Left, int i)
+{
+	int j, tmp;
+	tmp = L[i];
+	for(j=i;j>Left;j--)
+	{
+		L[j] = L[j-1];
+	}
+	L[Left] = tmp;
+	
+}
+
+void LeftShift(int L[], int Left, int i)
+{
+	int j, tmp;
+	tmp = L[Left];
+	for(j=Left;j<i;j++)
+	{
+		L[j] = L[j+1];
+	}
+	L[i] = tmp;
+}
+
